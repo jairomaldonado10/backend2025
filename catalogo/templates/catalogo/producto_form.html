@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>{% if form.instance.pk %}Editar producto{% else %}Nuevo producto{% endif %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { --gap: 12px; --border:#ddd; --bg:#f7f7f7; }
+    body { font-family: system-ui, Arial, sans-serif; margin: 24px; }
+    .card { max-width: 640px; background: #fff; border:1px solid var(--border); border-radius: 10px; padding: 20px; }
+    h1 { margin: 0 0 14px; }
+    .actions { display:flex; gap:var(--gap); margin-top: var(--gap); }
+    .btn, button { padding:8px 12px; border:1px solid var(--border); border-radius:8px; text-decoration:none; display:inline-block; background:#fff; cursor:pointer; }
+    .btn:hover, button:hover { background: var(--bg); }
+    .errorlist { color:#b00020; margin: 0 0 8px; list-style: none; padding-left: 0; }
+    .field { margin-bottom: var(--gap); }
+    label { display:block; margin-bottom: 4px; font-weight: 600; }
+    input, textarea { width:100%; padding:8px; border:1px solid var(--border); border-radius:6px; }
+    small { color:#666; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>{% if form.instance.pk %}Editar producto{% else %}Nuevo producto{% endif %}</h1>
+
+   
+    {{ form.non_field_errors }}
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      
+      {% for field in form %}
+        <div class="field">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+          {{ field.errors }}
+        </div>
+      {% endfor %}
+
+      <div class="actions">
+        <button type="submit">Guardar</button>
+        <a class="btn" href="{% url 'producto_list' %}">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,5 +1,6 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+from .models import Producto
 
-def inicio(request):
-    nombre = "Jairo Maldonado"
-    return HttpResponse(f"¡Bienvenidos a mi primera app Django, {nombre}!")
+def productos_lista(request):
+    productos = Producto.objects.all()
+    return render(request, 'catalogo/productos_lista.html', {'productos': productos})
